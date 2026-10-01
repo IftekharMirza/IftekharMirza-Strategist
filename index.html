@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#030030">
+<title>Content &amp; Distribution | Iftekhar Mirza</title>
+
+<script>document.documentElement.classList.add('js');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+  /* Foundation: deep blue radial gradient, blueprint grid, all-white text, glowing blue
+     spotlight box behind serif italic words, gradient blue buttons, glass navbar. */
+  :root {
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #04001a;
+    --surface: rgba(9, 8, 91, 0.72);
+    --border: rgba(255, 255, 255, 0.18);
+    --text: #ffffff;
+    --muted: #ffffff;
+    --accent: #ffffff;
+    --node-fill: #0a0966;
+    --line-off: rgba(255, 255, 255, 0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px)); }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      radial-gradient(circle at 12% 18%, rgba(58, 78, 255, 0.30) 0%, rgba(58, 78, 255, 0) 42%),
+      radial-gradient(circle at 88% 8%, rgba(35, 45, 160, 0.26) 0%, rgba(35, 45, 160, 0) 46%),
+      radial-gradient(circle at 92% 82%, rgba(64, 110, 255, 0.24) 0%, rgba(64, 110, 255, 0) 48%),
+      radial-gradient(circle at 8% 88%, rgba(48, 32, 170, 0.28) 0%, rgba(48, 32, 170, 0) 50%),
+      radial-gradient(circle at 62% 46%, rgba(30, 34, 120, 0.16) 0%, rgba(30, 34, 120, 0) 55%),
+      linear-gradient(165deg, #05001f 0%, #04001a 45%, #020012 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------------- Nav ---------------- */
+  .nav-wrap {
+    position: sticky;
+    top: calc(20px + env(safe-area-inset-top, 0px));
+    z-index: 50;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 32px 0;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 10px 10px 10px 20px;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(0, 0, 20, 0.35);
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0047ff, #0f5fff);
+    color: #ffffff;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-text { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--text); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    background: #030030;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 11px 26px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .nav-links a { transition: opacity 0.2s ease; }
+  .nav-links a:hover { opacity: 0.7; }
+
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .nav-cta {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0047ff, #0f5fff);
+    color: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(15, 95, 255, 0.3); }
+
+  .nav-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .nav-toggle span { width: 16px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .nav-mobile-panel {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 10px;
+    background: var(--surface);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0 20px;
+    flex-direction: column;
+    transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
+  }
+
+  .nav-mobile-panel a { padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; font-weight: 600; color: var(--text); }
+  .nav-mobile-panel a:last-child { border-bottom: none; }
+  .nav-mobile-panel.open { max-height: 320px; opacity: 1; padding: 8px 20px; }
+
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav-mobile-panel { display: flex; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-wrap { padding: 14px 16px 0; }
+    .navbar { padding: 8px 8px 8px 14px; }
+    .nav-cta { padding: 10px 16px; font-size: 0.8rem; }
+  }
+
+  /* ---------------- Shared headline + spotlight ---------------- */
+  .headline { font-weight: 700; line-height: 1.2; font-size: clamp(2.1rem, 4.6vw, 3.6rem); }
+
+  .headline .carrier { display: block; color: var(--text); margin-bottom: 0.14em; }
+
+  /* Glowing blue box behind the italic serif spotlight words. Sized in em, so it scales with the text. */
+  .headline .spotlight,
+  .intro-title .spotlight,
+  .dist-heading .spotlight {
+    display: inline-block;
+    max-width: calc(100% - 0.16em);
+    padding: 0 0.3em;
+    margin: 0 0.08em;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--accent);
+    background:
+      linear-gradient(90deg, #189bef 0%, rgba(24, 155, 239, 0) 14%, rgba(24, 155, 239, 0) 86%, #189bef 100%),
+      linear-gradient(180deg, #189bef 0%, #05a7e7 50%, #169cee 100%);
+    border-radius: 0.06em;
+    box-shadow: 0 0 0.35em rgba(5, 167, 231, 0.5), 0 0 0.7em rgba(24, 155, 239, 0.22);
+    text-shadow: 0 0.03em 0.12em rgba(0, 45, 140, 0.35);
+  }
+
+  .headline .spotlight {
+    font-size: clamp(2.4rem, 5.6vw, 4.4rem);
+    margin-top: 0.1em;
+    margin-bottom: 0.2em;
+  }
+
+  /* ---------------- Hero ---------------- */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 32px 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-content { max-width: 880px; animation: rise 0.9s ease both; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .subtitle { margin: 8px auto 0; max-width: 620px; font-size: 1.08rem; line-height: 1.7; color: var(--muted); font-weight: 500; }
+
+  .cta-row { margin-top: 44px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn {
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 15px 28px;
+    border-radius: 999px;
+    transition: transform 0.15s ease, background 0.4s ease, background-position 0.4s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .btn:focus-visible, .nav-cta:focus-visible, .nav-toggle:focus-visible, .nav-links a:focus-visible, .nav-mobile-panel a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .btn-primary { background: linear-gradient(135deg, #0047ff, #0f5fff); background-size: 200% 200%; background-position: 0% 50%; color: #ffffff; }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0047ff, #0f5fff, #7fb0ff);
+    background-position: 100% 50%;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(15, 95, 255, 0.35);
+  }
+
+  .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+  .btn-secondary:hover { border-color: var(--text); }
+
+  /* ---------------- Intro ---------------- */
+  .intro { position: relative; padding: 120px 32px 140px; }
+
+  .intro-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 40px; text-align: left; }
+
+  .intro-title { font-weight: 700; line-height: 1.28; font-size: clamp(1.9rem, 4.2vw, 3.15rem); max-width: 920px; color: var(--text); }
+
+  .intro-rule { width: min(100%, 920px); max-width: 100%; height: 1px; border: 0; background: rgba(255, 255, 255, 0.22); }
+
+  .intro-body { width: 100%; max-width: 40rem; display: flex; flex-direction: column; gap: 24px; }
+
+  .intro-body p { font-size: clamp(1.02rem, 0.9rem + 0.45vw, 1.2rem); line-height: 1.75; font-weight: 500; color: var(--text); text-wrap: pretty; }
+
+  .aside { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-size: 1.18em; line-height: 1; color: var(--text); }
+  .closing { color: var(--text); font-weight: 700; }
+
+  /* ---------------- Process ---------------- */
+  .page-head {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .page-head .headline { max-width: 880px; }
+
+  .steps { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 32px 160px; }
+
+  .track {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+    background: var(--line-off);
+    pointer-events: none;
+  }
+
+  .track-fill { position: absolute; top: 0; left: 0; width: 100%; height: 0; opacity: 0; border-radius: 3px; background: #ffffff; }
+
+  .step { position: relative; display: grid; grid-template-columns: 1fr 24px 1fr; padding: 88px 0; }
+  .step:first-of-type { padding-top: 96px; }
+  .step:last-of-type { padding-bottom: 0; }
+
+  .step-dot {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    align-self: start;
+    margin-top: 9px;
+    position: relative;
+    z-index: 2;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--node-fill);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .step.is-active .step-dot { background: #ffffff; border-color: #ffffff; }
+
+  .step-body { grid-row: 1; max-width: 34rem; transition: opacity 0.5s ease; }
+
+  .step--left .step-body { grid-column: 1; justify-self: end; text-align: right; padding-right: 48px; }
+  .step--right .step-body { grid-column: 3; justify-self: start; text-align: left; padding-left: 48px; }
+
+  .js .step-body { opacity: 0.28; }
+  .js .step.is-active .step-body { opacity: 1; }
+
+  .step-label { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-size: 1.7rem; line-height: 1.2; }
+
+  .step-title { margin-top: 6px; font-weight: 700; line-height: 1.2; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); }
+
+  .step-copy { margin-top: 22px; display: flex; flex-direction: column; gap: 18px; }
+
+  .step-copy p { font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem); line-height: 1.75; font-weight: 500; text-wrap: pretty; }
+
+  /* ---------------- Mobile ---------------- */
+  @media (max-width: 720px) {
+    .page-head { padding: 24px 20px 16px; }
+    .steps { padding: 0 20px 120px; }
+    .track { left: 42px; }
+    .step { grid-template-columns: 44px 1fr; padding: 64px 0; }
+    .step:first-of-type { padding-top: 72px; }
+    .step-dot { grid-column: 1; }
+    .step--left .step-body, .step--right .step-body { grid-column: 2; justify-self: start; text-align: left; padding: 0 0 0 8px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 72px 20px 100px; }
+    .intro-title { line-height: 1.36; }
+    .intro { padding: 88px 20px 72px; }
+    .intro-inner { gap: 28px; }
+    .intro-body { gap: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-content { animation: none; }
+    .step-body, .step-dot { transition: none; }
+  }
+
+  /* ---------------- Distribution ---------------- */
+  .distribution {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 448px;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .distribution .badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    background: rgba(24, 155, 239, 0.16);
+    border: 1px solid rgba(24, 155, 239, 0.45);
+  }
+
+  .dist-heading {
+    margin-top: 28px;
+    max-width: 32rem;
+    font-weight: 700;
+    line-height: 1.3;
+    font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+    color: var(--text);
+  }
+
+  .dist-heading .spotlight {
+    font-size: 1.14em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+  }
+
+  .distribution .copy {
+    margin-top: 32px;
+    max-width: 34rem;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .distribution .copy p {
+    font-size: clamp(1rem, 0.94rem + 0.3vw, 1.12rem);
+    line-height: 1.8;
+    font-weight: 500;
+    color: var(--text);
+    text-wrap: pretty;
+  }
+
+  /* Circle visual: everything is sized in container units (cqw), so it scales as one piece. */
+  .distribution .visual {
+    position: relative;
+    width: 100%;
+    max-width: 448px;
+    aspect-ratio: 1;
+    justify-self: center;
+    container-type: inline-size;
+  }
+
+  .distribution .ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .distribution .r1 { width: 100cqw;    background: #0b0838; border: 1px solid rgba(255, 255, 255, 0.10); }
+  .distribution .r2 { width: 80.357cqw; background: rgba(24, 155, 239, 0.08); }
+  .distribution .r3 { width: 60.268cqw; border: 1px solid rgba(255, 255, 255, 0.35); }
+  .distribution .r4 {
+    width: 39.286cqw;
+    background: linear-gradient(135deg, #0047ff, #0f5fff);
+    box-shadow: 0 0 6cqw rgba(15, 95, 255, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.3;
+    font-size: min(1.1rem, 4.4cqw);
+  }
+
+  .distribution .orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    animation: dist-turn 30s linear infinite;
+  }
+
+  .distribution .slot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    transform: rotate(calc(var(--a) * 1deg)) translateY(calc(var(--r) * -1cqw));
+  }
+
+  .distribution .up {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    transform: rotate(calc(var(--a) * -1deg));
+  }
+
+  .distribution .tile {
+    --icon: 8.93cqw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--icon);
+    height: var(--icon);
+    margin: calc(var(--icon) / -2);
+    border-radius: 25%;
+    overflow: hidden;
+    animation: dist-unturn 30s linear infinite;
+  }
+
+  .distribution .tile svg { display: block; width: 100%; height: 100%; }
+
+  @keyframes dist-turn   { to { transform: rotate(360deg); } }
+  @keyframes dist-unturn { to { transform: rotate(-360deg); } }
+
+  .distribution .on-edge { --r: 40.179; }
+  .distribution .on-ring { --r: 30.134; }
+
+  @media (max-width: 900px) {
+    .distribution {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 88px 20px;
+      gap: 64px;
+    }
+    .dist-heading, .distribution .copy { max-width: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .distribution .orbit, .distribution .tile { animation: none; }
+  }
+
+  .distribution .dist-cta { margin-top: 40px; }
+  @media (max-width: 900px) { .distribution .dist-cta { margin-top: 32px; } }
+
+  .distribution .copy { gap: 18px; }
+  .distribution .copy .lead { font-weight: 700; }
+  .distribution .copy .lead strong { font-weight: 800; }
+  .distribution .needs { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-left: 4px; }
+  .distribution .needs li {
+    position: relative;
+    padding-left: 26px;
+    font-size: clamp(1rem, 0.94rem + 0.3vw, 1.12rem);
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .distribution .needs li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #189bef;
+    box-shadow: 0 0 8px rgba(24, 155, 239, 0.7);
+  }
+
+  .distribution .hl {
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.08em 0.3em;
+    border-radius: 0.2em;
+    background: linear-gradient(135deg, #0047ff, #0f5fff);
+    box-shadow: 0 0 0.6em rgba(15, 95, 255, 0.45);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* ---------------- Features ---------------- */
+  /* Centered in the window like the reference: grid is capped so boxes keep a fixed,
+     compact size instead of stretching edge to edge. */
+  .features {
+    --pad: 40px;
+    --gap: 9px;
+    padding-block: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: var(--pad);
+  }
+
+  /* Small pill tag, top center (same pill look as the site's nav) */
+  .features { position: relative; }
+
+  .feat-tag {
+    position: static;            /* sits right above the grid with a small, even gap */
+    margin-bottom: 28px;
+    display: inline-block;
+    max-width: 100%;
+    width: max-content;
+    text-align: center;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+    background: rgba(40, 60, 230, 0.22);
+    border: 1px solid rgba(140, 160, 255, 0.45);
+    box-shadow: 0 0 18px rgba(30, 60, 255, 0.18);
+  }
+
+  /* 5 equal columns: row 1 fills all five, row 2 uses four and leaves the 5th slot empty */
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--gap);
+    width: 100%;
+    margin-block: 0;
+    max-width: 1274px;   /* 5 boxes of about 247px + 4 gaps of 9px (reference size, 10% smaller) */
+  }
+
+  /* Every card is the same square. Text is sized in container units (cqw),
+     so it shrinks and grows with the card and always stays inside it. */
+  .feat-card {
+    container-type: inline-size;
+    aspect-ratio: 275 / 157;
+    overflow: hidden;
+    background: rgba(2, 3, 14, 0.82);
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .feat-card-in {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3cqw;
+    padding: 4.4cqw;
+  }
+
+
+  .feat-card h3 {
+    font-size: 6.5cqw;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    transition: color 0.2s ease;
+  }
+
+  .feat-card p {
+    font-size: 4.3cqw;
+    font-weight: 500;
+    line-height: 1.42;
+    color: rgba(255, 255, 255, 0.86);
+    overflow-wrap: anywhere;
+    transition: color 0.2s ease;
+  }
+
+  /* Light state (from the reference): white box, dark title, softer dark body text.
+     Mouse hover on desktop, press-and-hold on touch screens, keyboard focus. */
+  @media (hover: hover) {
+    .feat-card:hover { background: #ffffff; border-color: #ffffff; }
+    .feat-card:hover h3 { color: #1b1b1f; }
+    .feat-card:hover p  { color: #4a4a52; }
+  }
+  .feat-card.is-held,
+  .feat-card:focus-visible { background: #ffffff; border-color: #ffffff; outline: none; }
+  .feat-card.is-held h3,
+  .feat-card:focus-visible h3 { color: #1b1b1f; }
+  .feat-card.is-held p,
+  .feat-card:focus-visible p  { color: #4a4a52; }
+
+  /* Empty 5th slot on row 2: invisible, only holds the space on desktop */
+  .feat-spacer { aspect-ratio: 275 / 157; visibility: hidden; }
+
+  /* Tablet and phone: readable fixed text sizes; every box still ends up the same size
+     because all rows share one height (the tallest box sets it). */
+  @media (max-width: 1100px) {
+    .features { --pad: 28px; padding-block: 64px; }
+    .feat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; max-width: 882px; }
+    .feat-spacer { display: none; }
+    .feat-card { aspect-ratio: auto; }
+    .feat-card-in { padding: 16px; gap: 7px; }
+    .feat-card h3 { font-size: 0.99rem; }
+    .feat-card p  { font-size: 0.77rem; }
+  }
+
+  @media (max-width: 1100px) { .feat-tag { margin-bottom: 24px; } }
+
+  @media (max-width: 720px) {
+    .features { --pad: 20px; padding-block: 56px; }
+    .feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 520px) {
+    .feat-tag { font-size: 0.85rem; padding: 9px 18px; margin-bottom: 20px; }
+    .feat-grid { grid-template-columns: minmax(0, 1fr); }
+    .feat-card h3 { font-size: 1.08rem; }
+    .feat-card p  { font-size: 0.86rem; }
+  }
+
+  /* ---------------- Who I Work With ---------------- */
+  .who { --pad: 40px; max-width: 1200px; margin: 0 auto; padding: 96px var(--pad) 110px; display: flex; flex-direction: column; align-items: center; gap: 64px; }
+  .who-title { text-align: center; font-weight: 700; line-height: 1.3; font-size: clamp(2.2rem, 5vw, 3.9rem); }
+  .who-title .carrier { color: var(--text); }
+  .who-title .spotlight { display: inline-block; max-width: calc(100% - 0.16em); padding: 0 0.3em; margin: 0.08em 0.08em 0.1em; font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-size: 1.14em; line-height: 1.1; color: #fff;
+    background: linear-gradient(90deg, #189bef 0%, rgba(24,155,239,0) 14%, rgba(24,155,239,0) 86%, #189bef 100%), linear-gradient(180deg, #189bef 0%, #05a7e7 50%, #169cee 100%);
+    border-radius: 0.06em; box-shadow: 0 0 0.35em rgba(5,167,231,.5), 0 0 0.7em rgba(24,155,239,.22); text-shadow: 0 0.03em 0.12em rgba(0,45,140,.35); }
+
+  .who-grid { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+
+  .who-card { --mx: 50%; --my: 0%; position: relative; isolation: isolate; display: flex; flex-direction: column; gap: 18px; padding: 36px 32px 40px; border-radius: 28px; overflow: hidden;
+    background: radial-gradient(420px circle at var(--mx) var(--my), rgba(24,155,239,.22), transparent 60%), linear-gradient(165deg, rgba(28,38,190,.34) 0%, rgba(6,6,60,.7) 55%, rgba(3,0,32,.85) 100%);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: 0 24px 50px rgba(0,0,20,.45), inset 0 1px 0 rgba(255,255,255,.14);
+    transition: transform .35s ease, box-shadow .35s ease; }
+  /* gradient hairline border */
+  .who-card::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 1px; pointer-events: none;
+    background: linear-gradient(160deg, rgba(120,170,255,.75), rgba(255,255,255,.08) 38%, rgba(24,155,239,.5) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+  .who-card::after { content: ""; position: absolute; left: 32px; right: 32px; bottom: 0; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, #189bef, transparent); opacity: .55; transition: opacity .35s ease; }
+
+  .who-num { align-self: flex-start; font-family: "Instrument Serif", serif; font-style: italic; font-size: 1.5rem; line-height: 1; padding: 6px 16px 8px; border-radius: 999px; color: #fff;
+    background: linear-gradient(135deg, #0047ff, #0f5fff); box-shadow: 0 0 18px rgba(15,95,255,.5); }
+  .who-card h3 { font-size: clamp(1.45rem, 1.2rem + .6vw, 1.8rem); font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+  .who-card p { margin-bottom: 10px; font-size: 1.02rem; line-height: 1.75; font-weight: 500; color: rgba(255,255,255,.88); text-wrap: pretty; }
+
+
+  .who-btn { margin-top: auto; align-self: stretch; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 100%; padding: 15px 24px; border-radius: 999px; font-size: 0.95rem; font-weight: 700; line-height: 1.2; color: #fff; text-align: center;
+    background: linear-gradient(135deg, #0047ff, #0f5fff); box-shadow: 0 8px 22px rgba(15,95,255,.28), inset 0 1px 0 rgba(255,255,255,.22);
+    transition: transform .15s ease, box-shadow .3s ease; }
+  .who-btn::after { content: "\2192"; transition: transform .2s ease; }
+  .who-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(15,95,255,.45), inset 0 1px 0 rgba(255,255,255,.28); }
+  .who-btn:hover::after { transform: translateX(4px); }
+  .who-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  @media (hover: hover) {
+    .who-card:hover { transform: translateY(-8px); box-shadow: 0 34px 70px rgba(0,0,20,.55), 0 0 40px rgba(15,95,255,.3), inset 0 1px 0 rgba(255,255,255,.2); }
+    .who-card:hover::after { opacity: 1; }
+  }
+  .who-card:focus-visible { outline: 2px solid #189bef; outline-offset: 3px; }
+
+  @media (max-width: 1000px) { .who-grid { grid-template-columns: minmax(0, 1fr); max-width: 640px; } .who { gap: 48px; padding-top: 72px; } }
+  @media (max-width: 640px) { .who { --pad: 20px; padding-bottom: 80px; } .who-card { padding: 30px 24px 34px; border-radius: 24px; } .who-grid { gap: 20px; } }
+  @media (prefers-reduced-motion: reduce) { .who-card, .who-btn { transition: none; } .who-card:hover, .who-btn:hover { transform: none; } }
+
+  /* ---------------- Final CTA ---------------- */
+  .cta {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 110px);
+    padding: 72px 32px 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cta-content { max-width: 880px; }
+
+  .cta .badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    background: rgba(24, 155, 239, 0.16);
+    border: 1px solid rgba(24, 155, 239, 0.45);
+  }
+
+  .cta .headline { margin-top: 28px; }
+  .cta .headline .line { display: block; }
+  .cta .subtitle { margin-top: 12px; text-wrap: pretty; }
+
+  .cta-action { margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+  .cta .btn { font-size: 1.02rem; padding: 17px 34px; box-shadow: 0 0 28px rgba(15, 95, 255, 0.3); }
+  .cta .btn:hover { box-shadow: 0 10px 28px rgba(15, 95, 255, 0.45); }
+  .cta .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .assure { font-size: 0.98rem; font-weight: 500; line-height: 1.5; }
+  .assure em { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-size: 1.22em; }
+
+  @media (max-width: 640px) {
+    .cta { padding: 56px 20px 88px; }
+    .cta-action { margin-top: 36px; }
+  }
+
+  /* ---------------- Footer ---------------- */
+  .site-footer {
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    background: rgba(2, 0, 18, 0.55);
+  }
+
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 72px 32px 0; }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+    gap: 48px;
+    padding-bottom: 64px;
+  }
+
+  .footer-blurb { max-width: 22rem; font-size: 1rem; line-height: 1.8; font-weight: 500; }
+
+  .footer-col h3 { font-size: 0.95rem; font-weight: 800; line-height: 1.3; }
+
+  .footer-col ul { list-style: none; margin-top: 22px; display: flex; flex-direction: column; gap: 14px; }
+
+  .footer-col a { font-size: 1rem; font-weight: 500; line-height: 1.4; transition: opacity 0.2s ease; overflow-wrap: anywhere; }
+  .footer-col a:hover { opacity: 0.7; }
+  .footer-col li { font-size: 1rem; font-weight: 500; line-height: 1.4; }
+
+  .footer-col a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .footer-bar {
+    border-top: 1px solid var(--border);
+    padding: 26px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 24px;
+    flex-wrap: wrap;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-blurb { max-width: 32rem; }
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner { padding: 56px 20px 0; }
+    .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-bottom: 48px; }
+    .footer-col--contact { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <nav class="navbar" aria-label="Main">
+      <a href="#hero" class="logo" aria-label="Iftekhar Mirza, home">
+        <span class="logo-mark" aria-hidden="true">i</span>
+        <span class="logo-text">IM</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#process">Process</a>
+        <a href="#distribution">Distribution</a>
+        <a href="#features">Features</a>
+        <a href="#who-i-help">Who I Help</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="nav-cta">Book a Call</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMobilePanel">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="nav-mobile-panel" id="navMobilePanel">
+      <a href="#process">Process</a>
+      <a href="#distribution">Distribution</a>
+        <a href="#features">Features</a>
+      <a href="#who-i-help">Who I Help</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- 1. Hero -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="headline">
+          <span class="carrier">Content and Distribution That Turns Founders and Coaches</span>
+          <span class="spotlight">Into Market Leaders.</span>
+        </h1>
+
+        <p class="subtitle">
+          I build and execute the strategy that builds a magnetic audience, from strategy to
+          platform-native distribution, organically attracting your ideal customers directly
+          to your offer.
+        </p>
+
+        <div class="cta-row">
+          <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a Strategy Call</a>
+          <a href="#process" class="btn btn-secondary">See the Process</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Strategy without execution (self-introduction) -->
+    <section class="intro" id="intro">
+      <div class="intro-inner">
+        <h2 class="intro-title">
+          The founders who win the next decade
+          <span class="spotlight">own their audience</span>
+          before they own their market.
+        </h2>
+
+        <hr class="intro-rule" aria-hidden="true">
+
+        <div class="intro-body">
+          <p>
+            For 3+ years, I've been deep in the content space. I started off as a video editor
+            out of interest and became obsessed with content and its impact when paired with
+            proper distribution. At present, I handle the full lifecycle of content strategy,
+            from distribution to the backend funnels that convert attention into paying customers.
+          </p>
+
+          <p>
+            Every decision is backed by data, so results are measurable, not accidental.
+            <em class="aside">And there's always room to be spontaneous and try out new things.</em>
+          </p>
+
+          <p class="closing">
+            I believe that real authority is engineered through the right distribution
+            and the right presentation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Process -->
+    <section id="process" aria-labelledby="processTitle">
+      <header class="page-head">
+        <h2 class="headline" id="processTitle">
+          <span class="carrier">How I Launch &amp;</span>
+          <span class="spotlight">Scale Your Offer</span>
+        </h2>
+      </header>
+
+      <div class="steps" id="steps">
+        <div class="track" id="track" aria-hidden="true">
+          <div class="track-fill" id="trackFill"></div>
+        </div>
+
+        <article class="step step--left">
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-body">
+            <p class="step-label">Step 1:</p>
+            <h3 class="step-title">Content Strategy</h3>
+            <div class="step-copy">
+              <p>
+                Content to conversion, mapped to one goal. Ideas, offer alignment, positioning,
+                packaging, creative direction, all built around your ICP.
+              </p>
+              <p class="closing">Not a template. A strategy your competitors can't copy.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="step step--right">
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-body">
+            <p class="step-label">Step 2:</p>
+            <h3 class="step-title">Content Writing</h3>
+            <div class="step-copy">
+              <p>
+                I extract your vision, experience and insights, then break them down and write
+                them on frameworks that hold attention. Your voice, adapted for YT, LinkedIn,
+                IG and X.
+              </p>
+              <p class="closing">The result reads like your own notes, not mine.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="step step--left">
+          <span class="step-dot" aria-hidden="true"></span>
+          <div class="step-body">
+            <p class="step-label">Step 3:</p>
+            <h3 class="step-title">Strategic Distribution</h3>
+            <div class="step-copy">
+              <p>
+                One idea = 15+ pieces of content across IG, LinkedIn, YT &amp; X.
+                <em class="aside">Not reposted, rewritten.</em>
+              </p>
+              <p class="closing">
+                Platform-native hooks and proven frameworks turn scattered attention into
+                consistent conviction around your offer.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Distribution -->
+    <section class="distribution" id="distribution" aria-labelledby="distTitle">
+
+    <div class="text">
+      <span class="badge">Distribution</span>
+
+      <h2 class="dist-heading" id="distTitle">
+        Great Content Isn't Enough Without <span class="spotlight">Real Distribution</span>
+      </h2>
+
+      <div class="copy">
+        <p class="lead">Your customers need around:</p>
+        <ul class="needs">
+          <li>7 hours of total interaction</li>
+          <li>11 unique touchpoints</li>
+          <li>4 different platform</li>
+        </ul>
+        <p class="lead">before they trust <strong>YOU</strong> enough to buy.</p>
+        <p>
+          So I take one core idea and adapt it natively for each platform. Your audience keeps
+          meeting you where they already spend time, <mark class="hl">until buying from you feels like the
+          obvious next step.</mark>
+        </p>
+      </div>
+
+      <div class="dist-cta">
+        <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Free Discovery Call</a>
+      </div>
+    </div>
+
+    <div class="visual" role="img" aria-label="LinkedIn, YouTube, Instagram and X icons orbiting the words One idea, every platform">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="ring r4"><span>One Idea,<br>Every Platform</span></div>
+
+      <div class="orbit" aria-hidden="true">
+
+        <!-- LinkedIn -->
+        <div class="slot on-edge" style="--a:45"><div class="up"><div class="tile">
+          <svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#0A66C2"/><g fill="#fff"><circle cx="6.2" cy="6.4" r="1.8"/><rect x="4.6" y="9.2" width="3.2" height="10"/><path d="M10.2 9.2h3v1.4c.5-.9 1.6-1.6 3.1-1.6 3 0 3.6 2 3.6 4.5V19.2h-3.1v-5c0-1.2 0-2.5-1.6-2.5s-1.7 1.3-1.7 2.5v5h-3.3z"/></g></svg>
+        </div></div></div>
+
+        <!-- YouTube -->
+        <div class="slot on-ring" style="--a:135"><div class="up"><div class="tile">
+          <svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#FF0000"/><path d="M9.6 7.8v8.4l7.2-4.2z" fill="#fff"/></svg>
+        </div></div></div>
+
+        <!-- Instagram -->
+        <div class="slot on-edge" style="--a:225"><div class="up"><div class="tile">
+          <svg viewBox="0 0 24 24"><defs><linearGradient id="gi" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/><stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs><rect width="24" height="24" fill="url(#gi)"/><g fill="none" stroke="#fff" stroke-width="1.7"><rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.3"/></g><circle cx="16.4" cy="7.6" r="1" fill="#fff"/></svg>
+        </div></div></div>
+
+        <!-- X (Twitter) -->
+        <div class="slot on-ring" style="--a:315"><div class="up"><div class="tile">
+          <svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#000"/><path fill="#fff" transform="translate(12 12) scale(0.6) translate(-11.9 -12)" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </div></div></div>
+
+      </div>
+    </div>
+
+  </section>
+
+    <!-- 5. Features -->
+    <section class="features" id="features" aria-label="Features">
+    <span class="feat-tag">Things You Get For Free While Working With Me</span>
+
+    <div class="feat-grid">
+
+      <!-- Row 1 -->
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Positioning and Offer Alignment</h3>
+          <p>Position yourself as the obvious choice in your industry, with content that sells your offer for you.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Creative Direction</h3>
+          <p>I lead your creatives so your brand looks and sounds consistent everywhere without you worrying.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Platform Native Repurposing</h3>
+          <p>One idea, rewritten to fit each platform, so you show up everywhere without starting from scratch.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Performance Analytics</h3>
+          <p>Monthly report on what's working, cut what isn't, and double down on content that drives real growth.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Backend Systems</h3>
+          <p>Conversations funnels that turn attention into booked calls and paying clients.</p>
+        </div>
+      </article>
+
+      <!-- Row 2 -->
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>YouTube Growth + Management</h3>
+          <p>A/B-tested thumbnails and titles, plus ideation, content structure, and CTAs, feeding funnels that attract your ideal clients.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Project Management</h3>
+          <p>An organized workflow so every deliverable ships on time without you chasing it.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Carousels</h3>
+          <p>Ideation to final carousel design done for your IG and LinkedIn.</p>
+        </div>
+      </article>
+
+      <article class="feat-card" tabindex="0">
+        <div class="feat-card-in">
+          <h3>Content Writing</h3>
+          <p>Writing that will feel like reading your own notes.</p>
+        </div>
+      </article>
+
+      <div class="feat-spacer" aria-hidden="true"></div>
+
+    </div>
+  </section>
+
+    <!-- 6. Who I Work With -->
+    <section class="who" id="who-i-help" aria-labelledby="whoTitle">
+      <h2 class="who-title" id="whoTitle"><span class="carrier">Who I</span> <span class="spotlight">Work With</span></h2>
+
+      <div class="who-grid">
+        <article class="who-card" tabindex="0">
+          <span class="who-num" aria-hidden="true">01</span>
+          <h3>Coaches</h3>
+          <p>You've got the frameworks and the results. What's missing is a brand that positions you as the obvious authority in your niche, not just another coach in the feed.</p>
+          <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="who-btn">Book a discovery call</a>
+        </article>
+
+        <article class="who-card" tabindex="0">
+          <span class="who-num" aria-hidden="true">02</span>
+          <h3>Founders</h3>
+          <p>Your face is your best distribution channel. I help you turn your story and expertise into content that builds trust in the business before a sales call ever happens.</p>
+          <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="who-btn">Book a discovery call</a>
+        </article>
+
+        <article class="who-card" tabindex="0">
+          <span class="who-num" aria-hidden="true">03</span>
+          <h3>SaaS Founders</h3>
+          <p>Your product might be self-explanatory to you, not to the market. I help you become the recognisable voice behind the product, driving demand your ads alone can't.</p>
+          <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="who-btn">Book a discovery call</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6. Final CTA -->
+    <section class="cta" id="cta" aria-labelledby="ctaTitle">
+      <div class="cta-content">
+        <span class="badge">Free Discovery Call</span>
+
+        <h2 class="headline" id="ctaTitle">
+          <span class="line">It's Time You Build</span>
+          <span class="spotlight">Real Distribution</span>
+          <span class="line">Around Your Offer</span>
+        </h2>
+
+        <p class="subtitle">
+          One 30-minute call. I'll show you exactly how your content can bring buyers to your
+          offer, how distribution would work for you, and what to expect in the first 90 days.
+        </p>
+
+        <div class="cta-action">
+          <a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a Strategy Call</a>
+          <p class="assure">No pressure. No pitch deck. <em>Just a conversation.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next sections go below this point -->
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-blurb">Content and distribution for founders and coaches, built into one system.</p>
+        </div>
+
+        <nav class="footer-col" aria-label="Sitemap">
+          <h3>Sitemap</h3>
+          <ul>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#distribution">Distribution</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#who-i-help">Who I Help</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://calendly.com/iftekhar-reavo/30-minute-personal-brand-discovery-call" target="_blank" rel="noopener noreferrer">Book a Call</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-col footer-col--contact">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="mailto:Iftekhar.reavo@gmail.com">Iftekhar.reavo@gmail.com</a></li>
+            <li>Remote</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer">X</a></li>
+            <li><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>&copy; 2026 Iftekhar Mirza</span>
+        <span>All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- Nav ---------- */
+    const navToggle = document.getElementById('navToggle');
+    const navMobilePanel = document.getElementById('navMobilePanel');
+
+    function setMenu(open) {
+      navMobilePanel.classList.toggle('open', open);
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+    }
+
+    navToggle.addEventListener('click', () => setMenu(!navMobilePanel.classList.contains('open')));
+    navMobilePanel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+    /* ---------- Intro divider: size the line to the widest rendered line of text ---------- */
+    (function () {
+      const inner = document.querySelector('.intro-inner');
+      const rule = inner.querySelector('.intro-rule');
+      const texts = inner.querySelectorAll('.intro-title, .intro-body p');
+
+      function fitRule() {
+        const left = rule.getBoundingClientRect().left;
+        let right = 0;
+        texts.forEach((el) => {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          Array.from(range.getClientRects()).forEach((r) => {
+            if (r.width > 0) right = Math.max(right, r.right);
+          });
+        });
+        if (right > left) rule.style.width = Math.ceil(right - left) + 'px';
+      }
+
+      window.addEventListener('resize', fitRule);
+      if ('ResizeObserver' in window) new ResizeObserver(fitRule).observe(inner);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitRule);
+      fitRule();
+    })();
+
+    /* ---------- Process: scroll-driven line ----------
+       The white line fills down to a reading line about 60% of the way down the screen.
+       Each dot and step lights up as the line reaches it. Once the timeline has scrolled
+       fully into view, the line completes, so the last step always lights up. */
+    (function () {
+      const steps = document.getElementById('steps');
+      const track = document.getElementById('track');
+      const fill = document.getElementById('trackFill');
+      const items = Array.from(steps.querySelectorAll('.step'));
+      const dots = items.map((s) => s.querySelector('.step-dot'));
+
+      let dotY = [];
+      let trackH = 0;
+      let queued = false;
+
+      function measure() {
+        const top = steps.getBoundingClientRect().top;
+        dotY = dots.map((d) => {
+          const r = d.getBoundingClientRect();
+          return r.top - top + r.height / 2;
+        });
+        trackH = dotY[dotY.length - 1];
+        track.style.height = trackH + 'px';
+        update();
+      }
+
+      function update() {
+        queued = false;
+        const vh = window.innerHeight;
+        const rect = steps.getBoundingClientRect();
+        const readY = vh * 0.6;
+        let px = Math.min(trackH, Math.max(0, readY - rect.top));
+        if (rect.bottom <= vh) px = trackH;
+
+        fill.style.height = px + 'px';
+        fill.style.opacity = px > 1 ? '1' : '0';
+        items.forEach((s, i) => s.classList.toggle('is-active', dotY[i] <= px + 0.5));
+      }
+
+      function onScroll() {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', measure);
+      if ('ResizeObserver' in window) new ResizeObserver(measure).observe(steps);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+      measure();
+    })();
+  </script>
+
+
+  <script>
+  // Touch: hold a card to turn it white, release to turn it back.
+  (function () {
+    var cards = document.querySelectorAll('.feat-card');
+    cards.forEach(function (card) {
+      var on  = function () { card.classList.add('is-held'); };
+      var off = function () { card.classList.remove('is-held'); };
+      card.addEventListener('touchstart', on, { passive: true });
+      card.addEventListener('touchend', off);
+      card.addEventListener('touchcancel', off);
+      card.addEventListener('contextmenu', function (e) { if (card.classList.contains('is-held')) e.preventDefault(); });
+    });
+  })();
+</script>
+
+
+  <script>
+    // Who I Work With: soft blue glow that follows the pointer inside each card
+    document.querySelectorAll('.who-card').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  </script>
+
+</body>
+</html>
